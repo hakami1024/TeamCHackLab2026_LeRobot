@@ -32,3 +32,4 @@ Calibration ids: follower `hacklab_follower`, leader `hacklab_leader` (stored in
 
 - `scripts/watch_follower.py`: live follower joint readout, torque off.
 - `scripts/powered_test_follower.py`: moves each follower joint a small step and back.
+- `scripts/teleop_check.py [seconds]`: eases the follower to the leader pose, mirrors it, reports tracking error.
