@@ -85,26 +85,40 @@ To add more episodes to the same dataset later, run the same command again with 
 
 ## 3. Train ACT (overnight)
 
-Run this on the laptop that is **not** recording.
+Run this on the laptop that is **not** recording. First install the training extra once (it adds `accelerate`): `uv sync`, since `pyproject.toml` already asks for `lerobot[feetech,training]==0.7.0`.
+
+The launcher has the settings that fit the 4 GB RTX 3050:
+
+```bash
+nohup scripts/train_act_wrappers.sh > outputs/logs/act_wrappers.log 2>&1 &
+tail -f outputs/logs/act_wrappers.log
+```
+
+It runs this command, so you can also copy it and change it:
 
 ```bash
 .venv/bin/lerobot-train \
-  --dataset.repo_id=$HF_USER/wrappers_to_bin \
+  --dataset.repo_id=hakami1024/wrappers_merged_v2346_clean \
   --policy.type=act \
   --policy.device=cuda \
-  --policy.use_amp=true \
-  --policy.repo_id=$HF_USER/act_wrappers_to_bin \
+  --accelerator.mixed_precision=bf16 \
+  --batch_size=4 \
+  --num_workers=4 \
+  --steps=100000 \
+  --save_freq=10000 \
+  --log_freq=200 \
   --output_dir=outputs/train/act_wrappers \
   --job_name=act_wrappers \
-  --batch_size=8 \
-  --steps=60000 \
-  --save_freq=10000
+  --policy.push_to_hub=false
 ```
 
-- On the 4 GB RTX 3050, `--batch_size=8` should fit. If you get "CUDA out of memory", use `--batch_size=4`. See [gpu.md](gpu.md).
-- Use the time per step from the rehearsal run to pick `--steps`. If 60,000 steps would take more than about 8 hours, use 30,000 to 40,000 instead.
-- A checkpoint is saved every 10,000 steps in `outputs/train/act_wrappers/checkpoints/`, so if something crashes you still have the last one. To continue a crashed run, add `--resume=true --config_path=outputs/train/act_wrappers/checkpoints/last/pretrained_model/train_config.json`.
-- At the end the model is uploaded to `$HF_USER/act_wrappers_to_bin` on the Hub.
+- **Dataset:** `hakami1024/wrappers_merged_v2346_clean` is recordings v2, v3, v4 and v6 merged, minus 5 outlier episodes (75 episodes, 32k frames, one task string). Pick another one with `DATASET=hakami1024/<name> scripts/train_act_wrappers.sh`. Extra flags are passed through, for example `--steps=5000` for a quick test.
+- **Memory:** `--batch_size=8` runs out of memory on 4 GB even with bf16. Batch 4 with bf16 peaks around 2.1 GB.
+- **Speed:** about 0.22 s per step, so 100k steps take 6 to 7 hours. Use fewer steps if the night is shorter.
+- **LeRobot 0.7.0 changes:** `--policy.use_amp=true` no longer turns on mixed precision, use `--accelerator.mixed_precision=bf16`. The `--wandb.*` flags are gone.
+- `HF_HUB_OFFLINE=1` (set by the launcher) makes it use the datasets already on this laptop in `~/.cache/huggingface/lerobot/`.
+- A checkpoint is saved every 10,000 steps in `outputs/train/act_wrappers/checkpoints/`. To continue a crashed run, add `--resume=true --config_path=outputs/train/act_wrappers/checkpoints/last/pretrained_model/train_config.json`.
+- The model is not uploaded automatically. To share it, run `.venv/bin/hf upload $HF_USER/act_wrappers_to_bin outputs/train/act_wrappers/checkpoints/last/pretrained_model`.
 
 ## 4. Run the policy on the arm
 

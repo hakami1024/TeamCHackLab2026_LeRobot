@@ -33,8 +33,9 @@ The second command should print `True NVIDIA GeForce RTX 3050 Laptop GPU`.
 
 ## Training settings for 4 GB
 
-- Use `--policy.device=cuda --batch_size=8`. If training dies with "CUDA out of memory", drop to `--batch_size=4`.
-- Add `--policy.use_amp=true` (mixed precision). It uses less memory and is faster on this card.
+- Use `--policy.device=cuda --batch_size=4 --accelerator.mixed_precision=bf16`. Batch 8 runs out of memory even with bf16. Batch 4 peaks around 2.1 GB at about 0.22 s per step. In LeRobot 0.7.0 `--policy.use_amp=true` does not turn on mixed precision.
+- `scripts/train_act_wrappers.sh` has these settings. See [ml-plan.md](ml-plan.md#3-train-act-overnight).
+- A rerun viewer left open from recording can hold about 300 MB of VRAM. Close it before a long run.
 - Close other GPU users (browsers with video, the camera viewer) while training.
 - Don't record and train on the same laptop at the same time. Record on one laptop and train on the other.
 - If a full run would take longer than the night, use fewer steps or a free Kaggle or Colab GPU. The dataset lives on the Hugging Face Hub, so the same `lerobot-train` command works there.
