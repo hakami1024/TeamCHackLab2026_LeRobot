@@ -1,0 +1,8 @@
+[project]
+name = "hacklab-lerobot"
+version = "0.1.0"
+description = "SO-101 leader/follower project built on LeRobot"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "lerobot[feetech]",
+]
