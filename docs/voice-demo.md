@@ -172,6 +172,8 @@ scripts/voice_trigger.sh --live
 | `--policy <dir>` | another local ACT checkpoint directory |
 | `--text` | type phrases to test without a mic, never moves the arm |
 
+**A spoken "don't" is not a safe stop.** In tests with synthetic voices, "Hey Claude, do not clean the table" sometimes triggered, and so did "don't" and "never" in push-to-talk when said the moment the mic opened. To stop it, use Ctrl-C.
+
 During a run:
 
 - Ctrl-C during the 3 second countdown cancels.
