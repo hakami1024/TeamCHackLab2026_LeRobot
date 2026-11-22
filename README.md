@@ -29,6 +29,10 @@ On a new laptop, first install the [system packages](docs/voice-demo.md#1-system
 
 If asked about calibration, press a blank Enter, never `c`. To stop, press Ctrl-C once. Saying "don't" is not a safe stop. Camera aim, flicker, mic tips and troubleshooting are in [docs/voice-demo.md](docs/voice-demo.md).
 
+## Dataset
+
+Our latest dataset, used to train the demo model: [hakami1024/wrappers_to_bin_v10_20261122_124023](https://huggingface.co/datasets/hakami1024/wrappers_to_bin_v10_20261122_124023) (101 episodes, 65,300 frames at 30 fps, front and wrist cameras). The demo model was fine-tuned on it with the idle starts trimmed, starting from our earlier `act_v2_v9_trim` checkpoint.
+
 ## Docs
 
 - **[docs/voice-demo.md](docs/voice-demo.md): run the demo ("Hey Claude, clean the table"): model download, install, cameras, mic, troubleshooting**
