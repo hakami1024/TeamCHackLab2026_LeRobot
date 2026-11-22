@@ -4,6 +4,7 @@ Team C, HackLab 2026. An SO-101 arm that picks up empty candy wrappers and drops
 
 ## Docs
 
+- **[docs/voice-demo.md](docs/voice-demo.md): run the demo ("Hey Claude, clean the table"): model download, install, cameras, mic, troubleshooting**
 - [docs/setup.md](docs/setup.md): environment, ports, motor IDs, chaining, calibration, check scripts, teleoperation
 - [docs/ml-plan.md](docs/ml-plan.md): the task, recording, ACT training, running the policy, what to do if it fails
 - [docs/gpu.md](docs/gpu.md): NVIDIA driver, CUDA check, training settings for the 4 GB RTX 3050
@@ -11,7 +12,7 @@ Team C, HackLab 2026. An SO-101 arm that picks up empty candy wrappers and drops
 ## Quick start
 
 ```bash
-uv sync                 # creates .venv with lerobot[feetech]
+uv sync                 # creates .venv with LeRobot and the extras we use
 source .venv/bin/activate
 ```
 
