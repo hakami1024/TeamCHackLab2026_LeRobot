@@ -2,6 +2,33 @@
 
 Team C, HackLab 2026. An SO-101 arm that picks up empty candy wrappers and drops them into a bin, trained with [LeRobot](https://github.com/huggingface/lerobot) 0.7.0 (installed from PyPI, standalone).
 
+## Run the voice demo: "Hey Claude, clean the table"
+
+The demo model is the ACT v10 fine-tune at 11k steps. Its weights (207 MB) are too big for git, so they are a file on this repo's draft release `model-act-v10-ft-11k`, visible to collaborators with write access.
+
+On a new laptop, first install the [system packages](docs/voice-demo.md#1-system-packages-arch) and sign in with `gh auth login`. Then, from the repo root:
+
+1. Install the Python environment: `uv sync --locked`
+2. Download and check the model:
+
+   ```bash
+   gh release download model-act-v10-ft-11k --pattern 'act_v10_ft_011000.tar' --dir /tmp --clobber
+   ```
+
+   ```bash
+   tar -xf /tmp/act_v10_ft_011000.tar
+   ```
+
+   ```bash
+   sha256sum -c models/act_v10_ft_011000.sha256
+   ```
+
+3. Install [speech recognition](docs/voice-demo.md#4-install-speech-recognition), copy in the [arm calibration](docs/voice-demo.md#5-arm-calibration) and check the [device paths](docs/voice-demo.md#6-devices).
+4. Dry run, the arm doesn't move: `scripts/voice_trigger.sh`
+5. Live, **the arm moves on the phrase**: `scripts/voice_trigger.sh --live` (add `--ptt` for push-to-talk in a noisy room)
+
+If asked about calibration, press a blank Enter, never `c`. To stop, press Ctrl-C once. Saying "don't" is not a safe stop. Camera aim, flicker, mic tips and troubleshooting are in [docs/voice-demo.md](docs/voice-demo.md).
+
 ## Docs
 
 - **[docs/voice-demo.md](docs/voice-demo.md): run the demo ("Hey Claude, clean the table"): model download, install, cameras, mic, troubleshooting**
