@@ -15,12 +15,12 @@ What to expect, from that evening's recordings:
 
 So it works, but not every time, and it's sensitive to the scene and camera aim.
 
-The weights (207 MB) are too big for git, which rejects files over 100 MB, so they are attached to this repo's GitHub release `model-act-v10-ft-11k`. Anyone with write access to the repo can download them, no Hugging Face account or Git LFS needed. `models/act_v10_ft_011000.sha256` pins the exact files.
+The weights (207 MB) are too big for git, which rejects files over 100 MB, so they are attached to this repo's GitHub release [`model-act-v10-ft-11k`](https://github.com/hakami1024/TeamCHackLab2026_LeRobot/releases/tag/model-act-v10-ft-11k). Anyone can download them, no account or Git LFS needed. `models/act_v10_ft_011000.sha256` pins the exact files.
 
 ## 1. System packages (Arch)
 
 ```bash
-sudo pacman -S --needed git github-cli uv ffmpeg v4l-utils libpulse psmisc speech-dispatcher espeak-ng curl unzip
+sudo pacman -S --needed git uv ffmpeg v4l-utils libpulse psmisc speech-dispatcher espeak-ng curl unzip
 ```
 
 - `speech-dispatcher` and `espeak-ng` provide `spd-say`, which LeRobot calls to announce the recording.
@@ -52,10 +52,8 @@ ACT loads torchvision's ResNet-18 file (47 MB) when it is created, so fetch it o
 
 ## 3. Download the model
 
-Sign in once with `gh auth login`, then:
-
 ```bash
-gh release download model-act-v10-ft-11k --pattern 'act_v10_ft_011000.tar' --dir /tmp --clobber
+curl -fL -o /tmp/act_v10_ft_011000.tar https://github.com/hakami1024/TeamCHackLab2026_LeRobot/releases/download/model-act-v10-ft-11k/act_v10_ft_011000.tar
 ```
 
 ```bash

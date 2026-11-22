@@ -4,15 +4,15 @@ Team C, HackLab 2026. An SO-101 arm that picks up empty candy wrappers and drops
 
 ## Run the voice demo: "Hey Claude, clean the table"
 
-The demo model is the ACT v10 fine-tune at 11k steps. Its weights (207 MB) are too big for git, so they are a file on this repo's draft release `model-act-v10-ft-11k`, visible to collaborators with write access.
+The demo model is the ACT v10 fine-tune at 11k steps: **[download the weights](https://github.com/hakami1024/TeamCHackLab2026_LeRobot/releases/download/model-act-v10-ft-11k/act_v10_ft_011000.tar)** (207 MB, public, no login needed). They are too big for git, so they are a file on the release [`model-act-v10-ft-11k`](https://github.com/hakami1024/TeamCHackLab2026_LeRobot/releases/tag/model-act-v10-ft-11k).
 
-On a new laptop, first install the [system packages](docs/voice-demo.md#1-system-packages-arch) and sign in with `gh auth login`. Then, from the repo root:
+On a new laptop, first install the [system packages](docs/voice-demo.md#1-system-packages-arch). Then, from the repo root:
 
 1. Install the Python environment: `uv sync --locked`
 2. Download and check the model:
 
    ```bash
-   gh release download model-act-v10-ft-11k --pattern 'act_v10_ft_011000.tar' --dir /tmp --clobber
+   curl -fL -o /tmp/act_v10_ft_011000.tar https://github.com/hakami1024/TeamCHackLab2026_LeRobot/releases/download/model-act-v10-ft-11k/act_v10_ft_011000.tar
    ```
 
    ```bash
